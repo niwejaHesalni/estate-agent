@@ -1,37 +1,58 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-/**
- * Header - Redfin-style navbar with logo, nav links, and Join/Sign in button
- */
+const NAV_LINKS = [
+  { label: 'Buy',        to: '/buy' },
+  { label: 'Rent',       to: '/rent' },
+  { label: 'Sell',       to: '/sell' },
+  { label: 'Mortgage',   to: '/mortgage' },
+  { label: 'Feed',       to: '/feed' },
+  { label: 'Favourites', to: '/favourites' },
+];
+
 function Header({ favouritesCount = 0 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
 
   return (
     <header className="site-header">
       <div className="header-inner">
         {/* Logo */}
         <Link to="/" className="header-logo">
-          <span className="logo-icon">🏠</span>
-          <span className="logo-text">EstateFind</span>
+          <img
+            src="/images/img_7154.jpg"
+            alt="EstateFind"
+            className="logo-img"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }}
+          />
+          <span className="logo-fallback" style={{ display: 'none' }}>
+            <span className="logo-icon">🏠</span>
+            <span className="logo-text">EstateFind</span>
+          </span>
         </Link>
 
-        {/* Nav links */}
+        {/* Nav */}
         <nav className={`header-nav ${mobileOpen ? 'open' : ''}`}>
-          <Link to="/?tab=buy" className="nav-link" onClick={() => setMobileOpen(false)}>Buy</Link>
-          <Link to="/?tab=rent" className="nav-link" onClick={() => setMobileOpen(false)}>Rent</Link>
-          <Link to="/?tab=sell" className="nav-link" onClick={() => setMobileOpen(false)}>Sell</Link>
-          <Link to="/?tab=mortgage" className="nav-link" onClick={() => setMobileOpen(false)}>Mortgage</Link>
-          <Link to="/?tab=feed" className="nav-link" onClick={() => setMobileOpen(false)}>Feed</Link>
-          <Link to="/?tab=favourites" className="nav-link nav-favourites" onClick={() => setMobileOpen(false)}>
-            ♥ Favourites {favouritesCount > 0 && <span className="fav-badge">{favouritesCount}</span>}
-          </Link>
+          {NAV_LINKS.map(({ label, to }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`nav-link${pathname === to ? ' nav-link--active' : ''}${label === 'Favourites' ? ' nav-favourites' : ''}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {label === 'Favourites' ? '♥ ' : ''}{label}
+              {label === 'Favourites' && favouritesCount > 0 && (
+                <span className="fav-badge">{favouritesCount}</span>
+              )}
+            </Link>
+          ))}
         </nav>
 
-        {/* CTA */}
         <button className="btn-signin">Join / Sign in</button>
 
-        {/* Hamburger */}
         <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
           <span /><span /><span />
         </button>
