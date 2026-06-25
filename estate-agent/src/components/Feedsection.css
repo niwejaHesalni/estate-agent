@@ -1,0 +1,142 @@
+.feed {
+  background: #fff;
+  padding: 2.5rem 2rem 3rem;
+}
+
+.feed__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feed__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+}
+
+.feed__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.feed__card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.feed__card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+  transform: translateY(-2px);
+}
+
+.feed__img-wrap {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+
+.feed__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feed__map-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #444;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.feed__info {
+  padding: 0.85rem 1rem 1rem;
+}
+
+.feed__price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.feed__price {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.feed__actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.feed__icon-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.15s;
+  padding: 2px 4px;
+}
+
+.feed__icon-btn:hover { color: #cc2020; }
+.feed__icon-btn--fav { color: #cc2020; }
+
+.feed__meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.2rem;
+}
+
+.feed__sqft { color: #2563eb; font-weight: 500; }
+
+.feed__addr {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.feed__see-more {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.feed__see-more-btn {
+  border: 2px solid #1a1a1a;
+  background: transparent;
+  color: #1a1a1a;
+  padding: 0.6rem 2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.feed__see-more-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .feed__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .feed__grid { grid-template-columns: 1fr; }
+}

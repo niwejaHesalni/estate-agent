@@ -1,0 +1,307 @@
+/* =============================================
+   FavouritesPage.css
+   ============================================= */
+
+.fav-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ── Grid area ── */
+.fav-page__grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.fav-page__grid-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.fav-page__clear-btn {
+  background: none;
+  border: 1.5px solid #cc2020;
+  color: #cc2020;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.fav-page__clear-btn:hover {
+  background: #cc2020;
+  color: #fff;
+}
+
+/* Empty state */
+.fav-page__empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #888;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.fav-page__empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.fav-page__empty p { font-size: 0.95rem; line-height: 1.8; }
+
+/* ── Cards ── */
+.fav-page__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.fav-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  transition: box-shadow 0.15s, transform 0.15s, opacity 0.15s;
+  cursor: grab;
+  position: relative;
+}
+
+.fav-card:active { cursor: grabbing; }
+
+.fav-card--dragging {
+  opacity: 0.45;
+  transform: scale(0.98);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+/* Drag handle */
+.fav-card__handle {
+  padding: 0 0.75rem;
+  font-size: 1.2rem;
+  color: #ccc;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+  letter-spacing: -2px;
+}
+
+.fav-card__handle:hover { color: #888; }
+
+/* Image */
+.fav-card__img {
+  width: 140px;
+  height: 96px;
+  flex-shrink: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.fav-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.fav-card__img:hover img { transform: scale(1.04); }
+
+/* Info */
+.fav-card__info {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.fav-card__price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
+}
+
+.fav-card__meta {
+  font-size: 0.82rem;
+  color: #666;
+  margin-bottom: 0.15rem;
+}
+
+.fav-card__addr {
+  font-size: 0.8rem;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Remove button */
+.fav-card__remove {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.fav-card__remove:hover { color: #cc2020; }
+
+/* ── Sidebar ── */
+.fav-page__sidebar {
+  position: sticky;
+  top: 90px;
+}
+
+.fav-sidebar {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.fav-sidebar__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+/* Drop zone */
+.fav-sidebar__drop {
+  border: 2px dashed #d1d5db;
+  border-radius: 10px;
+  padding: 1.1rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #aaa;
+  margin-bottom: 1rem;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.fav-sidebar__drop.over {
+  border-color: #cc2020;
+  background: #fff5f5;
+  color: #cc2020;
+  font-weight: 700;
+}
+
+/* List */
+.fav-sidebar__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.fav-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.fav-sidebar__item:hover { background: #f9f9f9; }
+
+.fav-sidebar__num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #aaa;
+  width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.fav-sidebar__item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fav-sidebar__item-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.fav-sidebar__item-loc {
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fav-sidebar__remove {
+  background: none;
+  border: none;
+  color: #ddd;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.fav-sidebar__remove:hover { color: #cc2020; }
+
+.fav-sidebar__empty {
+  font-size: 0.82rem;
+  color: #bbb;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.fav-sidebar__clear {
+  width: 100%;
+  margin-top: 1rem;
+  background: none;
+  border: 1.5px solid #e5e7eb;
+  color: #888;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.fav-sidebar__clear:hover {
+  border-color: #cc2020;
+  color: #cc2020;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .fav-page { grid-template-columns: 1fr; }
+  .fav-page__sidebar { position: static; }
+}
+
+@media (max-width: 500px) {
+  .fav-card__img { width: 100px; height: 72px; }
+}

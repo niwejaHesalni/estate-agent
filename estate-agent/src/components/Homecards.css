@@ -1,0 +1,78 @@
+.home-cards {
+  background: #f0eeeb;
+  padding: 3rem 2rem;
+}
+
+.home-cards__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.home-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.home-card__icon-wrap {
+  width: 90px;
+  height: 90px;
+  background: #f5f0eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+
+.home-card__icon {
+  font-size: 2.4rem;
+}
+
+.home-card__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.home-card__desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.home-card__btn {
+  border: 2px solid #1a1a1a;
+  background: transparent;
+  color: #1a1a1a;
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.home-card__btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .home-cards__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+  .home-cards__grid { grid-template-columns: 1fr; }
+}
