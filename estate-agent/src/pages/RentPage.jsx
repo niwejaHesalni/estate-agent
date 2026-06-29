@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
+import FavouritesSidebar from '../components/FavouritesSidebar';
 import properties from '../data/properties';
 
-function RentPage({ favourites, onAddFavourite }) {
+function RentPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
   const rentProps = properties.filter((p) => p.tenure === 'Leasehold');
   const [minBed, setMinBed] = useState('');
   const [type, setType] = useState('any');
@@ -17,6 +18,14 @@ function RentPage({ favourites, onAddFavourite }) {
   return (
     <>
       <Hero title={"Rent your next home"} subtitle="Flats, houses and apartments available to rent near you." />
+      <FavouritesSidebar
+        favourites={favourites}
+        allProperties={properties}
+        onAddFavourite={onAddFavourite}
+        onRemoveFavourite={onRemoveFavourite}
+        onClear={onClear}
+        layout="horizontal"
+      />
       <div className="page-layout">
         <aside className="filter-panel">
           <h3>Filter</h3>

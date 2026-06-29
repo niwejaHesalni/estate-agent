@@ -5,18 +5,24 @@ import properties from '../data/properties';
 
 function RentPage({ favourites, onAddFavourite }) {
   const rentProps = properties.filter((p) => p.tenure === 'Leasehold');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [minBed, setMinBed] = useState('');
   const [type, setType] = useState('any');
 
   const filtered = rentProps.filter((p) => {
     if (type !== 'any' && p.type !== type) return false;
+    if (minPrice && p.price < Number(minPrice)) return false;
+    if (maxPrice && p.price > Number(maxPrice)) return false;
     if (minBed && p.bedrooms < Number(minBed)) return false;
     return true;
   });
 
+  const reset = () => { setType('any'); setMinPrice(''); setMaxPrice(''); setMinBed(''); };
+
   return (
     <>
-      <Hero title={"Rent your next home"} subtitle="Flats, houses and apartments available to rent near you." />
+      <Hero title="Rent your next home" subtitle="Flats, houses and apartments available to rent near you." />
       <div className="page-layout">
         <aside className="filter-panel">
           <h3>Filter</h3>
@@ -29,10 +35,19 @@ function RentPage({ favourites, onAddFavourite }) {
             </select>
           </div>
           <div className="form-group">
+            <label>Min Price (£/mo)</label>
+            <input type="number" placeholder="e.g. 800" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Max Price (£/mo)</label>
+            <input type="number" placeholder="e.g. 3000" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+          </div>
+          <div className="form-group">
             <label>Min Bedrooms</label>
             <input type="number" placeholder="e.g. 1" value={minBed} onChange={(e) => setMinBed(e.target.value)} />
           </div>
-          <button className="search-btn reset-btn" onClick={() => { setType('any'); setMinBed(''); }}>Reset</button>
+          <button className="search-btn" onClick={() => {}}>Apply</button>
+          <button className="search-btn reset-btn" onClick={reset}>Reset</button>
         </aside>
         <section className="results-area">
           <h2>{filtered.length} {filtered.length === 1 ? 'Property' : 'Properties'} to Rent</h2>
