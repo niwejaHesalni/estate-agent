@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
+import FavouritesSidebar from '../components/FavouritesSidebar';
 import properties from '../data/properties';
 
-function BuyPage({ favourites, onAddFavourite }) {
+function BuyPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
   const buyProps = properties.filter((p) => p.tenure === 'Freehold' || p.type === 'House' || p.type === 'Flat');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
@@ -21,6 +22,14 @@ function BuyPage({ favourites, onAddFavourite }) {
   return (
     <>
       <Hero title={"Find your perfect home"} subtitle="Browse properties available to buy across the UK." />
+      <FavouritesSidebar
+        favourites={favourites}
+        allProperties={properties}
+        onAddFavourite={onAddFavourite}
+        onRemoveFavourite={onRemoveFavourite}
+        onClear={onClear}
+        layout="horizontal"
+      />
       <div className="page-layout">
         <aside className="filter-panel">
           <h3>Filter</h3>

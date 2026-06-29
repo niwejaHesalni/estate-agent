@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const NAV_LINKS = [
-  { label: 'Buy',        to: '/buy' },
-  { label: 'Rent',       to: '/rent' },
-  { label: 'Sell',       to: '/sell' },
-  { label: 'Mortgage',   to: '/mortgage' },
-  { label: 'Feed',       to: '/feed' },
+  { label: 'Buy', to: '/buy' },
+  { label: 'Rent', to: '/rent' },
+  { label: 'Sell', to: '/sell' },
+  { label: 'Feed', to: '/feed' },
   { label: 'Favourites', to: '/favourites' },
 ];
 
 function Header({ favouritesCount = 0 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? ' scrolled' : ''}`}>
       <div className="header-inner">
-        {/* Logo */}
         <Link to="/" className="header-logo">
           <img
             src="/images/img_7154.jpg"
@@ -34,7 +39,6 @@ function Header({ favouritesCount = 0 }) {
           </span>
         </Link>
 
-        {/* Nav */}
         <nav className={`header-nav ${mobileOpen ? 'open' : ''}`}>
           {NAV_LINKS.map(({ label, to }) => (
             <Link
@@ -50,8 +54,6 @@ function Header({ favouritesCount = 0 }) {
             </Link>
           ))}
         </nav>
-
-        <button className="btn-signin">Join / Sign in</button>
 
         <button className="hamburger" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
           <span /><span /><span />
