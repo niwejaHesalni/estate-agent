@@ -12,31 +12,43 @@ const NAV_LINKS = [
 function Header({ favouritesCount = 0 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 10);
+      if (scrollY > 80) {
+        if (scrollY > lastScrollY.current) {
+          setHidden(true);
+        } else {
+          setHidden(false);
+        }
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = scrollY;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle('header-hidden', hidden);
+  }, [hidden]);
+
   return (
-    <header className={`site-header${scrolled ? ' scrolled' : ''}`}>
+    <header className={`site-header${scrolled ? ' scrolled' : ''}${hidden ? ' hidden' : ''}`}>
       <div className="header-inner">
         <Link to="/" className="header-logo">
           <img
-            src="/images/img_7154.jpg"
+            src="/images/img_7155.png"
             alt="EstateFind"
             className="logo-img"
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
-            }}
           />
-          <span className="logo-fallback" style={{ display: 'none' }}>
-            <span className="logo-icon">🏠</span>
-            <span className="logo-text">EstateFind</span>
-          </span>
+          <span className="logo-text">EstateFind</span>
         </Link>
 
         <nav className={`header-nav ${mobileOpen ? 'open' : ''}`}>

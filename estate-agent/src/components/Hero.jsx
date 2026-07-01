@@ -8,7 +8,7 @@ const HERO_IMAGES = [
   '/images/pexels-594476755-17143278.jpg',
 ];
 
-const TABS = ['Buy', 'Rent', 'Sell', 'Mortgage', 'My Home Value'];
+const TABS = ['Buy', 'Rent', 'Sell', 'My Home Value'];
 
 function Hero({ title, subtitle, favouritesCount = 0 }) {
   const [activeTab, setActiveTab] = useState('Buy');
@@ -83,7 +83,6 @@ function Hero({ title, subtitle, favouritesCount = 0 }) {
     if (tab === 'buy') navigate(`/buy${query ? `?q=${encodeURIComponent(query)}` : ''}`);
     else if (tab === 'rent') navigate(`/rent${query ? `?q=${encodeURIComponent(query)}` : ''}`);
     else if (tab === 'sell') navigate('/sell');
-    else if (tab === 'mortgage') navigate('/');
     else navigate('/');
   };
 
@@ -114,7 +113,6 @@ function Hero({ title, subtitle, favouritesCount = 0 }) {
     'Buy': 'Enter a city, postcode or address',
     'Rent': 'Enter a city, postcode or area',
     'Sell': 'Enter your property address',
-    'Mortgage': 'Enter property value',
     'My Home Value': 'Enter your street address',
   };
 

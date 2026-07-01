@@ -9,12 +9,6 @@ const CARDS = [
     cta: 'Find an agent',
   },
   {
-    icon: '🏦',
-    title: 'Mortgage',
-    desc: 'Get award-winning service with competitive rates, fast pre-approvals, and seamless closings.',
-    cta: 'Get prequalified',
-  },
-  {
     icon: '💰',
     title: 'Sell',
     desc: 'We know how to price, market, and sell your home for top dollar — all for half the listing fee others charge.',
