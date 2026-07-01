@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
 import FavouritesSidebar from '../components/FavouritesSidebar';
@@ -6,6 +7,9 @@ import properties from '../data/properties';
 
 function BuyPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
   const buyProps = properties.filter((p) => p.tenure === 'Freehold' || p.type === 'House' || p.type === 'Flat');
+  const [searchParams] = useSearchParams();
+  const queryParam = searchParams.get('q') || '';
+  
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [minBed, setMinBed] = useState('');
@@ -16,6 +20,7 @@ function BuyPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
     if (minPrice && p.price < Number(minPrice)) return false;
     if (maxPrice && p.price > Number(maxPrice)) return false;
     if (minBed && p.bedrooms < Number(minBed)) return false;
+    if (queryParam && !p.location.toLowerCase().includes(queryParam.toLowerCase())) return false;
     return true;
   });
 
@@ -58,11 +63,19 @@ function BuyPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
         </aside>
         <section className="results-area">
           <h2>{filtered.length} {filtered.length === 1 ? 'Property' : 'Properties'} to Buy</h2>
-          <div className="results-grid">
-            {filtered.map((p) => (
-              <PropertyCard key={p.id} property={p} onAddFavourite={onAddFavourite} isFavourite={favourites.some((f) => f.id === p.id)} />
-            ))}
-          </div>
+          {filtered.length === 0 ? (
+            <div className="no-results" style={{ textAlign: 'center', padding: '3rem 1rem', background: '#f9f9f9', borderRadius: '8px', border: '1px dashed #ccc' }}>
+              <span style={{ fontSize: '3rem' }}>🔍</span>
+              <h3 style={{ margin: '1rem 0 0.5rem', color: '#333' }}>No Results Found</h3>
+              <p style={{ color: '#666' }}>We couldn't find any properties matching "{queryParam}". Try checking the location spelling or adjusting filters.</p>
+            </div>
+          ) : (
+            <div className="results-grid">
+              {filtered.map((p) => (
+                <PropertyCard key={p.id} property={p} onAddFavourite={onAddFavourite} isFavourite={favourites.some((f) => f.id === p.id)} />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </>

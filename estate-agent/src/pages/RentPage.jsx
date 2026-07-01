@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Hero from '../components/Hero';
 import PropertyCard from '../components/PropertyCard';
 import FavouritesSidebar from '../components/FavouritesSidebar';
@@ -6,12 +7,16 @@ import properties from '../data/properties';
 
 function RentPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
   const rentProps = properties.filter((p) => p.tenure === 'Leasehold');
+  const [searchParams] = useSearchParams();
+  const queryParam = searchParams.get('q') || '';
+
   const [minBed, setMinBed] = useState('');
   const [type, setType] = useState('any');
 
   const filtered = rentProps.filter((p) => {
     if (type !== 'any' && p.type !== type) return false;
     if (minBed && p.bedrooms < Number(minBed)) return false;
+    if (queryParam && !p.location.toLowerCase().includes(queryParam.toLowerCase())) return false;
     return true;
   });
 
@@ -46,7 +51,11 @@ function RentPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
         <section className="results-area">
           <h2>{filtered.length} {filtered.length === 1 ? 'Property' : 'Properties'} to Rent</h2>
           {filtered.length === 0 ? (
-            <div className="no-results"><p>No rental properties match your filters.</p></div>
+            <div className="no-results" style={{ textAlign: 'center', padding: '3rem 1rem', background: '#f9f9f9', borderRadius: '8px', border: '1px dashed #ccc' }}>
+              <span style={{ fontSize: '3rem' }}>🔍</span>
+              <h3 style={{ margin: '1rem 0 0.5rem', color: '#333' }}>No Results Found</h3>
+              <p style={{ color: '#666' }}>We couldn't find any properties matching "{queryParam}". Try checking the location spelling or adjusting filters.</p>
+            </div>
           ) : (
             <div className="results-grid">
               {filtered.map((p) => (
