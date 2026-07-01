@@ -122,17 +122,38 @@ button {
   background: #c96a28;
 }
 
+.feed__see-more-btn {
+  border: 2px solid #1a1a1a;
+  background: transparent;
+  color: #1a1a1a;
+  padding: 0.6rem 2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.feed__see-more-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
 /* ---- Results ---- */
 .results-area h2 {
-  font-size: 1.1rem;
-  color: var(--primary);
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
 }
 
 .results-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.results-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .property-card {
@@ -479,30 +500,24 @@ button {
   right: 0;
   z-index: 200;
   padding: 0 !important;
-  /* Liquid glass base */
-  background: rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 4px 32px rgba(0, 0, 0, 0.12);
+  background: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff !important;
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
 }
 
-/* Slightly more opaque once user scrolls */
 .site-header.scrolled {
-  background: rgba(255, 255, 255, 0.28) !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 8px 32px rgba(0, 0, 0, 0.15);
+  background: #000000 !important;
+}
+
+.site-header.hidden {
+  transform: translateY(-100%);
 }
 
 .header-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem 0 0.25rem;
   display: flex;
   align-items: center;
   height: 64px;
@@ -512,7 +527,7 @@ button {
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0;
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -528,6 +543,7 @@ button {
   color: #fff;
   letter-spacing: -0.5px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  margin-left: -50px;
 }
 
 .header-nav {
@@ -543,18 +559,21 @@ button {
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0.4rem 0.75rem;
-  border-radius: 4px;
-  /* flat — no bubble */
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease, font-weight 0.2s ease;
   white-space: nowrap;
   position: relative;
 }
 
+.nav-link:hover {
+  transform: translateY(-2px);
+  font-weight: 700;
+}
+
 
 .nav-link--active {
-  color: #912929 !important;
+  color: #ffffff !important;
   font-weight: 600;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid #ffffff;
 }
 
 .nav-favourites {
@@ -600,12 +619,10 @@ button {
 
 .hero {
   position: relative;
-  min-height: 90vh;
-  /* bigger image */
-  margin-top: -30px;
+  min-height: 95vh;
+  margin-top: -64px;
   display: flex;
   align-items: flex-end;
-  /* content anchored at bottom */
   overflow: hidden;
   background: #0d1b2a;
 }
@@ -863,6 +880,13 @@ button {
     width: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0;
+    color: #1a1a1a !important;
+  }
+
+  .nav-link--active {
+    border-bottom-color: #1a1a1a !important;
+    color: #1a1a1a !important;
+    font-weight: 700;
   }
 
   .btn-signin {
@@ -893,11 +917,13 @@ button {
 
 /* Logo image */
 .logo-img {
-  height: 42px;
+  height: 100px;
   width: auto;
   object-fit: contain;
   display: block;
+  filter: brightness(0) invert(1);
 }
+
 
 .logo-fallback {
   display: flex;
@@ -946,15 +972,18 @@ button {
 
 /* Hero subtitle */
 .hero-subtitle {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.861);
   font-size: 1.1rem;
+  font-weight: 450;
+  font-style: italic;
   margin-top: 0.75rem;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Active nav link */
 .nav-link--active {
-  color: #cc2020 !important;
+  
+  color: #fffbfb !important;
   font-weight: 700 !important;
 }
 
@@ -1000,48 +1029,6 @@ button {
   flex: 1;
 }
 
-/* Mortgage page */
-.mortgage-page {
-  max-width: 560px;
-  margin: 3rem auto;
-  padding: 0 1.5rem;
-}
-
-.mortgage-calc {
-  background: #fff;
-  border-radius: 14px;
-  padding: 2rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-.mortgage-calc h2 {
-  font-size: 1.4rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  color: #1a1a1a;
-}
-
-.mortgage-result {
-  margin-top: 1.5rem;
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.mortgage-result__row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.mortgage-result__row strong {
-  font-size: 1.05rem;
-  color: #cc2020;
-}
 
 /* Favourites page remove button */
 .fav-remove-card {
@@ -1397,6 +1384,9 @@ button {
    ============================================= */
 
 .fav-bar {
+  position: sticky;
+  top: 64px;
+  z-index: 100;
   background: #fff;
   border-bottom: 1px solid #e2e8f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -1579,8 +1569,17 @@ button {
   color: #ef4444;
 }
 
+.header-hidden .fav-bar {
+  top: 0;
+}
+
+/* Prevent content from scrolling behind sticky fav-bar */
+.fav-bar + .page-layout {
+  padding-top: calc(2rem + 20px);
+}
+
 @media (max-width: 767px) {
-  .fav-bar__inner {
+.fav-bar__inner {
     padding: 0.75rem 1rem;
     gap: 0.5rem;
   }

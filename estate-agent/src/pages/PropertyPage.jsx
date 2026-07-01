@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import properties from '../data/properties';
+import LocationMap from '../components/LocationMap';
 import './PropertyPage.css';
 
 function PropertyPage({ favourites, onAddFavourite }) {
@@ -32,9 +33,6 @@ function PropertyPage({ favourites, onAddFavourite }) {
       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-  const mapQuery = encodeURIComponent(property.location);
-  const mapSrc = `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${mapQuery}`;
-
   // Derived stats from existing data
   const sqft = property.bedrooms * 420 + 300; // estimated
   const estMonthly = Math.round((property.price * 0.045) / 12);
@@ -57,7 +55,7 @@ function PropertyPage({ favourites, onAddFavourite }) {
     <div className="pp">
       {/* ── Top nav bar ── */}
       <div className="pp__topbar">
-        <button className="pp__back" onClick={() => navigate(-1)}>← Search</button>
+        <button className="pp__back" onClick={() => navigate(-1)}>Search</button>
         <nav className="pp__tabnav">
           <a href="#overview" className="pp__tabnav-link pp__tabnav-link--active">Overview</a>
           <a href="#neighborhood" className="pp__tabnav-link">Neighbourhood</a>
@@ -120,13 +118,11 @@ function PropertyPage({ favourites, onAddFavourite }) {
               </div>
               {/* Mini map thumbnail */}
               <div className="pp__mini-map">
-                <iframe
-                  title="mini-map"
-                  width="120"
-                  height="90"
-                  style={{ border: 0, borderRadius: 6, pointerEvents: 'none' }}
-                  loading="lazy"
-                  src={`https://maps.google.com/maps?q=${mapQuery}&z=14&output=embed`}
+                <LocationMap
+                  locations={[property.location]}
+                  height="90px"
+                  mini={true}
+                  zoom={14}
                 />
               </div>
             </div>
@@ -160,14 +156,6 @@ function PropertyPage({ favourites, onAddFavourite }) {
               ))}
             </div>
 
-            <p className="pp__listed-by">Listed by EstateFind</p>
-            <div className="pp__agent-strip">
-              <div className="pp__agent-avatar">👤</div>
-              <div>
-                <div className="pp__agent-name">EstateFind Agent</div>
-                <div className="pp__agent-corp">EstateFind Corporation</div>
-              </div>
-            </div>
           </div>
 
           {/* ── Tabs: Floor Plan / Map ── */}
@@ -188,19 +176,10 @@ function PropertyPage({ favourites, onAddFavourite }) {
               <TabPanel>
                 <div className="pp__map-wrap">
                   <p className="pp__map-label">📍 {property.location}</p>
-                  {/* Uncomment + add API key to enable full Google Maps embed:
-                  <iframe title="Property Location" src={mapSrc}
-                    width="100%" height="340"
-                    style={{ border: 0, borderRadius: 8 }}
-                    allowFullScreen loading="lazy" />
-                  */}
-                  <iframe
-                    title="Property Location"
-                    width="100%"
-                    height="340"
-                    style={{ border: 0, borderRadius: 8 }}
-                    loading="lazy"
-                    src={`https://maps.google.com/maps?q=${mapQuery}&z=14&output=embed`}
+                  <LocationMap
+                    locations={[property.location]}
+                    height="340px"
+                    zoom={15}
                   />
                 </div>
               </TabPanel>
@@ -232,22 +211,6 @@ function PropertyPage({ favourites, onAddFavourite }) {
             ) : (
               <div className="pp__form">
                 <div className="pp__form-row">
-                  <div className="pp__form-group">
-                    <label>First name</label>
-                    <input placeholder="First" value={contactForm.first} onChange={(e) => setContactForm({ ...contactForm, first: e.target.value })} />
-                  </div>
-                  <div className="pp__form-group">
-                    <label>Last name</label>
-                    <input placeholder="Last" value={contactForm.last} onChange={(e) => setContactForm({ ...contactForm, last: e.target.value })} />
-                  </div>
-                </div>
-                <div className="pp__form-group">
-                  <label>Email</label>
-                  <input type="email" placeholder="Email" value={contactForm.email} onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })} />
-                </div>
-                <div className="pp__form-group">
-                  <label>Phone</label>
-                  <input type="tel" placeholder="(  )  -" value={contactForm.phone} onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })} />
                 </div>
                 <div className="pp__form-group">
                   <label>Message</label>
@@ -259,9 +222,6 @@ function PropertyPage({ favourites, onAddFavourite }) {
                   />
                 </div>
                 <button className="pp__contact-btn" onClick={handleSubmit}>Contact agent</button>
-                <p className="pp__terms">
-                  By contacting us you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
-                </p>
               </div>
             )}
           </div>

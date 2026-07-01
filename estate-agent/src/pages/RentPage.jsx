@@ -10,11 +10,15 @@ function RentPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
   const [searchParams] = useSearchParams();
   const queryParam = searchParams.get('q') || '';
 
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [minBed, setMinBed] = useState('');
   const [type, setType] = useState('any');
 
   const filtered = rentProps.filter((p) => {
     if (type !== 'any' && p.type !== type) return false;
+    if (minPrice && p.price < Number(minPrice)) return false;
+    if (maxPrice && p.price > Number(maxPrice)) return false;
     if (minBed && p.bedrooms < Number(minBed)) return false;
     if (queryParam && !p.location.toLowerCase().includes(queryParam.toLowerCase())) return false;
     return true;
@@ -43,10 +47,19 @@ function RentPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
             </select>
           </div>
           <div className="form-group">
+            <label>Min Price (£)</label>
+            <input type="number" placeholder="e.g. 200000" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Max Price (£)</label>
+            <input type="number" placeholder="e.g. 1000000" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+          </div>
+          <div className="form-group">
             <label>Min Bedrooms</label>
             <input type="number" placeholder="e.g. 1" value={minBed} onChange={(e) => setMinBed(e.target.value)} />
           </div>
-          <button className="search-btn reset-btn" onClick={() => { setType('any'); setMinBed(''); }}>Reset</button>
+          <button className="search-btn" onClick={() => {}}>Apply</button>
+          <button className="search-btn reset-btn" onClick={() => { setType('any'); setMinPrice(''); setMaxPrice(''); setMinBed(''); }}>Reset</button>
         </aside>
         <section className="results-area">
           <h2>{filtered.length} {filtered.length === 1 ? 'Property' : 'Properties'} to Rent</h2>
