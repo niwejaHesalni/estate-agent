@@ -766,6 +766,75 @@ button {
   background: #aa1010;
 }
 
+/* Suggestions Dropdown */
+.hero-search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+.hero-search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  padding: 0;
+  list-style: none;
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.hero-search-suggestion-item {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  border: none;
+  background: transparent;
+}
+
+.hero-search-suggestion-item:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hero-search-suggestion-item.active,
+.hero-search-suggestion-item:hover {
+  background: #cc2020;
+  color: #fff;
+  outline: none;
+}
+
+.hero-search-suggestion-item .suggestion-icon {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.hero-search-suggestion-item.active .suggestion-icon,
+.hero-search-suggestion-item:hover .suggestion-icon {
+  opacity: 1;
+}
+
+.hero-search-suggestions-loading {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #777;
+  text-align: center;
+}
+
 /* =============================================
    RESPONSIVE - mobile
    ============================================= */
