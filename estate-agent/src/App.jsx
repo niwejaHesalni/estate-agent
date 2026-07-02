@@ -1,11 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+
+/* ── XSS Protection ──
+ * React automatically escapes all JSX expressions, preventing HTML/script
+ * injection in rendered output. No dangerouslySetInnerHTML is used anywhere.
+ * User input in URLs is explicitly encoded via sanitize.js utilities.
+ * CSP meta tag in index.html provides additional defence-in-depth.          */
 import Header from './components/Header';
 import Hero from './components/Hero';
 import HomeCards from './components/HomeCards';
 import FeaturedCarousel from './components/FeaturedCarousel';
 import SplashScreen from './components/SplashScreen';
 import FavouritesSidebar from './components/FavouritesSidebar';
+import Footer from './components/Footer';
 import PropertyPage from './pages/PropertyPage';
 import BuyPage from './pages/BuyPage';
 import RentPage from './pages/RentPage';
@@ -82,6 +89,7 @@ function App() {
               } />
             </Routes>
           </div>
+          <Footer />
         </div>
       )}
     </>

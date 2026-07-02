@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import properties from '../data/properties';
+import { encodeUrlParam } from '../utils/sanitize';
 
 const HERO_IMAGES = [
   '/images/pexels-eslames1-28406822.jpg',
@@ -80,8 +81,8 @@ function Hero({ title, subtitle, favouritesCount = 0 }) {
 
   const handleSearch = () => {
     const tab = activeTab.toLowerCase();
-    if (tab === 'buy') navigate(`/buy${query ? `?q=${encodeURIComponent(query)}` : ''}`);
-    else if (tab === 'rent') navigate(`/rent${query ? `?q=${encodeURIComponent(query)}` : ''}`);
+    if (tab === 'buy') navigate(`/buy${query ? `?q=${encodeUrlParam(query)}` : ''}`);
+    else if (tab === 'rent') navigate(`/rent${query ? `?q=${encodeUrlParam(query)}` : ''}`);
     else if (tab === 'sell') navigate('/sell');
     else navigate('/');
   };
