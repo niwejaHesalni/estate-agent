@@ -11,8 +11,27 @@ function PropertyPage({ favourites, onAddFavourite }) {
   const navigate = useNavigate();
   const property = properties.find((p) => p.id === id);
   const [activeImg, setActiveImg] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [contactForm, setContactForm] = useState({ first: '', last: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+
+  React.useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const openLightbox = (i) => { setActiveImg(i); setLightboxOpen(true); };
+  const closeLightbox = () => setLightboxOpen(false);
+  const prevImg = () => setActiveImg((p) => (p > 0 ? p - 1 : property.pictures.length - 1));
+  const nextImg = () => setActiveImg((p) => (p < property.pictures.length - 1 ? p + 1 : 0));
+
+  React.useEffect(() => {
+    if (!lightboxOpen) return;
+    const handleKey = (e) => {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevImg();
+      if (e.key === 'ArrowRight') nextImg();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxOpen]);
 
   if (!property) {
     return (
@@ -27,11 +46,6 @@ function PropertyPage({ favourites, onAddFavourite }) {
 
   const fmt = (p) =>
     p.toLocaleString('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
-
-  const encode = (str) =>
-    String(str)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
   // Derived stats from existing data
   const sqft = property.bedrooms * 420 + 300; // estimated
@@ -81,7 +95,7 @@ function PropertyPage({ favourites, onAddFavourite }) {
 
           {/* Image gallery */}
           <div className="pp__gallery">
-            <div className="pp__gallery-main">
+            <div className="pp__gallery-main" onClick={() => openLightbox(activeImg)} style={{ cursor: 'pointer' }}>
               <img
                 src={property.pictures[activeImg]}
                 alt={`Property ${activeImg + 1}`}
@@ -95,12 +109,35 @@ function PropertyPage({ favourites, onAddFavourite }) {
                   src={pic}
                   alt={`Thumb ${i + 1}`}
                   className={i === activeImg ? 'active' : ''}
-                  onClick={() => setActiveImg(i)}
+                  onClick={() => openLightbox(i)}
                   onError={(e) => { e.target.src = `https://placehold.co/100x70?text=${i + 1}`; }}
                 />
               ))}
             </div>
           </div>
+
+          {/* Lightbox */}
+          {lightboxOpen && (
+            <div className="pp-lightbox" onClick={closeLightbox}>
+              <button className="pp-lightbox__close" onClick={closeLightbox}>✕</button>
+              <button className="pp-lightbox__arrow pp-lightbox__arrow--left" onClick={(e) => { e.stopPropagation(); prevImg(); }}>‹</button>
+              <div className="pp-lightbox__image-wrap" onClick={(e) => e.stopPropagation()}>
+                <img src={property.pictures[activeImg]} alt={`Property ${activeImg + 1}`} />
+              </div>
+              <button className="pp-lightbox__arrow pp-lightbox__arrow--right" onClick={(e) => { e.stopPropagation(); nextImg(); }}>›</button>
+              <div className="pp-lightbox__thumbs" onClick={(e) => e.stopPropagation()}>
+                {property.pictures.map((pic, i) => (
+                  <img
+                    key={i}
+                    src={pic}
+                    alt={`Thumb ${i + 1}`}
+                    className={i === activeImg ? 'active' : ''}
+                    onClick={() => setActiveImg(i)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* ── Overview section ── */}
           <div id="overview" className="pp__card">
