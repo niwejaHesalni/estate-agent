@@ -4,25 +4,29 @@
  * Tests are written as pure functions, independent of React rendering.
  */
 
+jest.mock('../utils/imgPath', () => ({
+  imgPath: (path) => path,
+}));
+
 import properties from '../data/properties';
 
 // ---- Helper: replicate the filter logic from SearchPage ----
-function filterProperties({ type, minPrice, maxPrice, minBedrooms, maxBedrooms, dateAfter, postcode }) {
+function filterProperties({ type, minPrice, maxPrice, minBedrooms, maxBedrooms, dateAfter, postcode } = {}) {
   let filtered = [...properties];
 
   if (type && type !== 'any') {
     filtered = filtered.filter((p) => p.type === type);
   }
-  if (minPrice !== undefined && minPrice !== '') {
+  if (minPrice !== undefined && minPrice !== '' && minPrice !== null) {
     filtered = filtered.filter((p) => p.price >= Number(minPrice));
   }
-  if (maxPrice !== undefined && maxPrice !== '') {
+  if (maxPrice !== undefined && maxPrice !== '' && maxPrice !== null) {
     filtered = filtered.filter((p) => p.price <= Number(maxPrice));
   }
-  if (minBedrooms !== undefined && minBedrooms !== '') {
+  if (minBedrooms !== undefined && minBedrooms !== '' && minBedrooms !== null) {
     filtered = filtered.filter((p) => p.bedrooms >= Number(minBedrooms));
   }
-  if (maxBedrooms !== undefined && maxBedrooms !== '') {
+  if (maxBedrooms !== undefined && maxBedrooms !== '' && maxBedrooms !== null) {
     filtered = filtered.filter((p) => p.bedrooms <= Number(maxBedrooms));
   }
   if (dateAfter) {
@@ -89,4 +93,32 @@ test('Combined filter: House type + max price 1000000 returns correct results', 
 test('Impossible criteria returns empty array', () => {
   const result = filterProperties({ minBedrooms: 10 });
   expect(result).toHaveLength(0);
+});
+
+// ---- Test 8: Empty criteria returns all properties ----
+test('Empty criteria returns all properties', () => {
+  const result = filterProperties({});
+  expect(result).toHaveLength(7);
+});
+
+// ---- Test 9: Undefined/empty params returns all properties ----
+test('Calling filter with no arguments returns all properties', () => {
+  const result = filterProperties();
+  expect(result).toHaveLength(7);
+});
+
+// ---- Test 10: Filter by date - after specified date ----
+test('Filtering by date returns properties added on or after that date', () => {
+  const result = filterProperties({ dateAfter: '2023-06-01' });
+  expect(result.length).toBeGreaterThan(0);
+  result.forEach((p) => {
+    const propDate = new Date(`${p.added.month} ${p.added.day}, ${p.added.year}`);
+    expect(propDate.getTime()).toBeGreaterThanOrEqual(new Date('2023-06-01').getTime());
+  });
+});
+
+// ---- Test 11: Filter by max bedrooms ----
+test('Filtering by max 2 bedrooms returns properties with 2 or fewer', () => {
+  const result = filterProperties({ maxBedrooms: 2 });
+  result.forEach((p) => expect(p.bedrooms).toBeLessThanOrEqual(2));
 });
