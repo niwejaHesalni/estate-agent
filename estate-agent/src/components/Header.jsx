@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { imgPath } from '../utils/imgPath';
 
 const NAV_LINKS = [
   { label: 'Buy', to: '/buy' },
@@ -44,7 +45,7 @@ function Header({ favouritesCount = 0 }) {
       <div className="header-inner">
         <Link to="/" className="header-logo">
           <img
-            src="/images/img_7155.png"
+            src={imgPath('/images/img_7155.png')}
             alt="EstateFind"
             className="logo-img"
           />

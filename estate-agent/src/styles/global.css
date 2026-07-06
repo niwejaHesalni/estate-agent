@@ -1014,6 +1014,15 @@ button {
 
 .info-card__icon {
   font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-card__icon img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
 }
 
 .info-card h3 {

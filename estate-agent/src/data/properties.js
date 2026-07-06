@@ -1,3 +1,5 @@
+import { imgPath } from '../utils/imgPath';
+
 const properties = [
   {
     id: "prop1",
@@ -92,4 +94,13 @@ const properties = [
   }
 ];
 
-export default properties;
+function resolveImages(p) {
+  return {
+    ...p,
+    picture: imgPath(p.picture),
+    pictures: p.pictures.map(imgPath),
+    floorplan: imgPath(p.floorplan),
+  };
+}
+
+export default properties.map(resolveImages);

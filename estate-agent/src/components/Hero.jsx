@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import properties from '../data/properties';
 import { encodeUrlParam } from '../utils/sanitize';
+import { imgPath } from '../utils/imgPath';
 
 const HERO_IMAGES = [
   '/images/pexels-eslames1-28406822.jpg',
   '/images/pexels-esteban-carriazo-2153373740-32983561.jpg',
   '/images/pexels-594476755-17143278.jpg',
-];
+].map(imgPath);
 
 const TABS = ['Buy', 'Rent', 'Sell', 'My Home Value'];
 
