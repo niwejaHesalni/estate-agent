@@ -20,6 +20,7 @@
     "babel-jest": "^29.0.0",
     "gh-pages": "^6.3.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.4.1",
     "vite": "^4.3.0"
   },
   "homepage": "https://niwejaHesalni.github.io/estate-agent",

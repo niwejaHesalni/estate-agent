@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropertyCard from '../components/PropertyCard';
 import FavouritesSidebar from '../components/FavouritesSidebar';
 import properties from '../data/properties';
+import { filterProperties } from '../utils/filterProperties';
 
 /**
  * SearchPage - Main page with search form, results grid, and favourites sidebar.
@@ -18,44 +19,15 @@ function SearchPage({ favourites, onAddFavourite, onRemoveFavourite, onClearFavo
   const [results, setResults] = useState(properties); // show all by default
 
   /**
-   * Converts property's added object to a JS Date for comparison.
-   */
-  const propDate = (p) =>
-    new Date(`${p.added.month} ${p.added.day}, ${p.added.year}`);
-
-  /**
    * handleSearch - Filters properties against current form values.
    * All criteria are optional and combined (AND logic).
    */
   const handleSearch = () => {
-    let filtered = [...properties];
-
-    if (type !== 'any') {
-      filtered = filtered.filter((p) => p.type === type);
-    }
-    if (minPrice !== '') {
-      filtered = filtered.filter((p) => p.price >= Number(minPrice));
-    }
-    if (maxPrice !== '') {
-      filtered = filtered.filter((p) => p.price <= Number(maxPrice));
-    }
-    if (minBedrooms !== '') {
-      filtered = filtered.filter((p) => p.bedrooms >= Number(minBedrooms));
-    }
-    if (maxBedrooms !== '') {
-      filtered = filtered.filter((p) => p.bedrooms <= Number(maxBedrooms));
-    }
-    if (dateAfter !== '') {
-      const after = new Date(dateAfter);
-      filtered = filtered.filter((p) => propDate(p) >= after);
-    }
-    if (postcode.trim() !== '') {
-      const pc = postcode.trim().toUpperCase();
-      filtered = filtered.filter((p) =>
-        p.location.toUpperCase().includes(pc)
-      );
-    }
-
+    const filtered = filterProperties(properties, {
+      type, minPrice, maxPrice,
+      minBedrooms, maxBedrooms,
+      dateAfter, postcode,
+    });
     setResults(filtered);
   };
 

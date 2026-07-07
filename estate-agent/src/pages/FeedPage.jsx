@@ -61,7 +61,12 @@ function FeedPage({ favourites, onAddFavourite, onRemoveFavourite, onClear }) {
           <h2>{filtered.length} {filtered.length === 1 ? 'Property' : 'Properties'} in Feed</h2>
           {filtered.length === 0 ? (
             <div className="no-results" style={{ textAlign: 'center', padding: '3rem 1rem', background: '#f9f9f9', borderRadius: '8px', border: '1px dashed #ccc' }}>
-              <span style={{ fontSize: '3rem' }}>🔍</span>
+              <span style={{ fontSize: '3rem' }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.5" width="48" height="48">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="M21 21l-4.35-4.35"/>
+                </svg>
+              </span>
               <h3 style={{ margin: '1rem 0 0.5rem', color: '#333' }}>No Results Found</h3>
               <p style={{ color: '#666' }}>Try adjusting your filters to find more properties.</p>
             </div>
