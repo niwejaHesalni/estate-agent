@@ -21,6 +21,7 @@ import FindAgentPage from './pages/FindAgentPage';
 import FeedPage from './pages/FeedPage';
 import FavouritesPage from './pages/FavouritesPage';
 import properties from './data/properties';
+import { addFav, removeFav, clearFav } from './utils/favourites';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -29,14 +30,11 @@ function App() {
   const handleSplashDone = useCallback(() => setShowSplash(false), []);
 
   const addFavourite = (property) => {
-    setFavourites((prev) => {
-      if (prev.find((p) => p.id === property.id)) return prev;
-      return [...prev, property];
-    });
+    setFavourites((prev) => addFav(prev, property));
   };
 
-  const removeFavourite = (id) => setFavourites((prev) => prev.filter((p) => p.id !== id));
-  const clearFavourites = () => setFavourites([]);
+  const removeFavourite = (id) => setFavourites((prev) => removeFav(prev, id));
+  const clearFavourites = () => setFavourites(clearFav());
 
   const sidebarProps = {
     favourites,

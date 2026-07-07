@@ -70,7 +70,12 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
         {/* ── LEFT: card grid ── */}
         <section className="fav-page__grid-area">
           <div className="fav-page__grid-header">
-            <h2>♥ {ordered.length} Saved {ordered.length === 1 ? 'Property' : 'Properties'}</h2>
+            <h2>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ verticalAlign: 'middle', marginRight: 4 }}>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              {ordered.length} Saved {ordered.length === 1 ? 'Property' : 'Properties'}
+            </h2>
             {ordered.length > 0 && (
               <button className="fav-page__clear-btn" onClick={() => { onClear(); setOrderedIds([]); }}>
                 Clear all
@@ -80,7 +85,11 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
 
           {ordered.length === 0 ? (
             <div className="fav-page__empty">
-              <p className="fav-page__empty-icon">♡</p>
+              <p className="fav-page__empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="48" height="48">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </p>
               <p>You haven't saved any properties yet.</p>
               <p>Click the heart icon on any listing to save it here.</p>
             </div>
@@ -97,7 +106,13 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
                   onDragEnd={() => setDraggingId(null)}
                 >
                   {/* Drag handle */}
-                  <div className="fav-card__handle" title="Drag to reorder">⠿</div>
+                  <div className="fav-card__handle" title="Drag to reorder">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                      <circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/>
+                      <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                      <circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/>
+                    </svg>
+                  </div>
 
                   {/* Image */}
                   <div className="fav-card__img" onClick={() => navigate(`/property/${p.id}`)}>
@@ -122,7 +137,9 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
                     className="fav-card__remove"
                     onClick={() => { onRemoveFavourite(p.id); setOrderedIds((prev) => prev.filter((id) => id !== p.id)); }}
                     title="Remove"
-                  >✕</button>
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
                 </div>
               ))}
             </div>
@@ -132,7 +149,12 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
         {/* ── RIGHT: sidebar ── */}
         <aside className="fav-page__sidebar">
           <div className="fav-sidebar">
-            <h3 className="fav-sidebar__title">❤ Saved ({ordered.length})</h3>
+            <h3 className="fav-sidebar__title">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style={{ verticalAlign: 'middle', marginRight: 4 }}>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              Saved ({ordered.length})
+            </h3>
 
             {/* Drop zone */}
             <div
@@ -141,7 +163,11 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
               onDragLeave={() => setOverDropZone(false)}
               onDrop={handleDropZoneDrop}
             >
-              {overDropZone ? '✓ Drop to save!' : '⬇ Drop a property here'}
+              {overDropZone ? (
+                <><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" style={{ verticalAlign: 'middle', marginRight: 4 }}><path d="M20 6L9 17l-5-5"/></svg>Drop to save!</>
+              ) : (
+                <><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" style={{ verticalAlign: 'middle', marginRight: 4 }}><path d="M12 5v14M5 12h14"/></svg>Drop a property here</>
+              )}
             </div>
 
             {/* Compact list */}
@@ -167,7 +193,9 @@ function FavouritesPage({ favourites, onAddFavourite, onRemoveFavourite, onClear
                         onRemoveFavourite(p.id);
                         setOrderedIds((prev) => prev.filter((id) => id !== p.id));
                       }}
-                    >✕</button>
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="12" height="12"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
                   </li>
                 ))}
               </ul>

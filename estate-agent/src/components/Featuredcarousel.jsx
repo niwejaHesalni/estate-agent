@@ -44,7 +44,13 @@ function FeaturedCarousel({ properties, onAddFavourite, favourites }) {
         ))}
 
         <div className="fc__card fc__see-all" onClick={() => navigate('/buy')}>
-          <span>🏠 See all early access homes</span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="20" height="20" style={{ verticalAlign: 'middle', marginRight: 6 }}>
+              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+              <path d="M9 21V12h6v9"/>
+            </svg>
+            See all early access homes
+          </span>
         </div>
       </div>
     </section>
